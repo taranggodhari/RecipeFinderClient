@@ -1,37 +1,184 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
-for details on configuring this project to bundle and minify static web assets. */
-body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿body {
+	padding-top: 50px;
+	padding-bottom: 20px;
 }
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+	padding-left: 15px;
+	padding-right: 15px;
 }
 
+.carousel {
+	width: 100%;
+	margin: auto;
+}
 /* Carousel */
 .carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
+	font-size: 20px;
+	line-height: 1.4;
 }
 
 /* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
-    width: 100%;
+.carousel-inner > .item > img {
+	object-fit: cover;
+	width: 100%;
+	height: 400px !important;
 }
 
 /* QR code generator */
 #qrCode {
-    margin: 15px;
+	margin: 15px;
 }
 
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
-        display: none;
-    }
+	/* Hide captions */
+	.carousel-caption {
+		display: none;
+	}
 }
+
+#imaginary_container {
+	margin-top: 20%; /* Don't copy this */
+}
+
+.stylish-input-group .input-group-addon {
+	background: white !important;
+}
+
+.stylish-input-group .form-control {
+	border-right: 0;
+	box-shadow: 0 0 0;
+	border-color: #ccc;
+}
+
+.stylish-input-group button {
+	border: 0;
+	background: transparent;
+}
+
+.search-form .form-group {
+	float: right !important;
+	transition: all 0.35s, border-radius 0s;
+	width: 32px;
+	height: 32px;
+	background-color: #fff;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+	border-radius: 25px;
+	border: 1px solid #ccc;
+	margin: 8px
+}
+
+	.search-form .form-group input.form-control {
+		padding-right: 20px;
+		border: 0 none;
+		background: transparent;
+		box-shadow: none;
+		display: block;
+	}
+
+		.search-form .form-group input.form-control::-webkit-input-placeholder {
+			display: none;
+		}
+
+		.search-form .form-group input.form-control:-moz-placeholder {
+			/* Firefox 18- */
+			display: none;
+		}
+
+		.search-form .form-group input.form-control::-moz-placeholder {
+			/* Firefox 19+ */
+			display: none;
+		}
+
+		.search-form .form-group input.form-control:-ms-input-placeholder {
+			display: none;
+		}
+
+	.search-form .form-group:hover,
+	.search-form .form-group.hover {
+		width: 100%;
+		border-radius: 4px 25px 25px 4px;
+	}
+
+	.search-form .form-group span.form-control-feedback {
+		position: absolute;
+		top: -1px;
+		right: -2px;
+		z-index: 2;
+		display: block;
+		width: 34px;
+		height: 34px;
+		line-height: 34px;
+		text-align: center;
+		color: #3596e0;
+		left: initial;
+		font-size: 14px;
+	}
+/*Card CSS*/
+.card {
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+	transition: 0.3s;
+	margin: 6%;
+}
+
+	.card:hover {
+		box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
+	}
+
+.card-body {
+	padding-top: 15px;
+	margin: 0px 10px;
+}
+
+.itemdata .cal {
+	border-right: 1px solid #D9D9D9
+}
+
+.itemdata .ing {
+	border-left: 1px solid #FFF
+}
+
+.itemdata .num {
+	font: normal 12px Arial;
+	text-shadow: 1px 1px 0px #FFF;
+	color: #7C0;
+}
+
+.itemdata {
+	padding: 10px 0px 8px;
+	text-align: center;
+	background: url(../images/line-h.gif) repeat-x center top;
+}
+
+.providersource {
+	background: url(../images/line-h.gif) repeat-x center top;
+	padding: 6px 0px 0px;
+	white-space: nowrap;
+	overflow: hidden;
+	height: 26px;
+}
+
+	.providersource a {
+		font: bold 14px/16px Arial;
+		text-shadow: 1px 1px 0px #FFF;
+		color: #999;
+	}
+
+.card .card-title {
+	height: 34px;
+	overflow: hidden;
+	font: normal 14px Arial;
+	text-shadow: 1px 1px 0px #FFF;
+}
+
+.card-body .savediv {
+	padding: 10px 0px 0px;
+	background: url(../images/line-h.gif) repeat-x center top;
+}
+
+	.card-body .savediv .savebutton {
+		width: 100%;
+	}

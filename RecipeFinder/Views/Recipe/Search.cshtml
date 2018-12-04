@@ -1,0 +1,47 @@
+﻿@model IEnumerable<RecipeFinder.Models.Recipe>
+
+@{
+	ViewData["Title"] = "Search";
+}
+
+<h2>Search Results</h2>
+<hr />
+@*<p>
+		<a asp-action="Create">Create New</a>
+	</p>*@
+<div class="container">
+	<div class="row">
+		@foreach (var item in Model)
+		{
+			<div class="col-md-3 col-sm-6">
+				<div class="card" style="width: 20rem; height:38rem;">
+					<img class="card-img-top img-responsive" src=@Html.DisplayFor(modelItem => item.image) alt=" @Html.DisplayNameFor(model => model.label)">
+					<span class="card-title">@Html.DisplayFor(modelItem => item.label)</span>
+					<div class="card-body">
+						<div class="itemdata">
+							<a class="cal" target="_blank" href=@Html.DisplayFor(modelItem => item.url)>
+								@{
+									int calories = (int)item.calories / (int)item.yield;
+									int ingredientscount = item.ingredients.Count();
+								}
+								<span class="num">@calories</span>
+								<span class="lbl">cal<span>ories</span></span>
+							</a>
+							<a class="ing" target="_blank" href=@Html.DisplayFor(modelItem => item.url)>
+								<span class="num">@ingredientscount</span>
+								<span class="lbl">ingr<span>edients</span></span>
+							</a>
+						</div>
+						<div class="providersource">
+							<a href=@Html.DisplayFor(modelItem => item.url) target="_blank">@Html.DisplayFor(modelItem => item.source)</a>
+						</div>
+						<div class="savediv">
+							<a href="#" class="btn btn-success savebutton">Save</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+</div>
+
