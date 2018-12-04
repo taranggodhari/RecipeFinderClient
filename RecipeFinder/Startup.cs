@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using RecipeFinder.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RecipeFinder.Models;
 
 namespace RecipeFinder
 {
@@ -37,7 +38,7 @@ namespace RecipeFinder
 			services.AddDbContext<ApplicationDbContext>(options =>
 				options.UseSqlServer(
 					Configuration.GetConnectionString("DefaultConnection")));
-			services.AddDefaultIdentity<IdentityUser>()
+			services.AddDefaultIdentity<ApplicationUser>()
 				.AddEntityFrameworkStores<ApplicationDbContext>();
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
