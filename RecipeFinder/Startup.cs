@@ -38,8 +38,11 @@ namespace RecipeFinder
 			services.AddDbContext<ApplicationDbContext>(options =>
 				options.UseSqlServer(
 					Configuration.GetConnectionString("DefaultConnection")));
-			services.AddDefaultIdentity<ApplicationUser>()
-				.AddEntityFrameworkStores<ApplicationDbContext>();
+			services.AddIdentity<ApplicationUser, IdentityRole>()
+			  .AddEntityFrameworkStores<ApplicationDbContext>()
+			  .AddDefaultTokenProviders();
+			//services.AddDefaultIdentity<ApplicationUser>()
+			//	.AddEntityFrameworkStores<ApplicationDbContext>();
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 		}

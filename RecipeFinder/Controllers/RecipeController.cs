@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -66,26 +67,43 @@ namespace RecipeFinder.Controllers
 				return View(recipes.ToList());
 			}
 		}
+		//[Authorize]
 		[HttpPost]
 		//[Authorize(Roles = "Student")]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Save(Recipe recipe)
+		public async Task<IActionResult> SaveRecipe(string rid)
 		{
-			if (recipe != null)
-			{
-				var newrecipe = new Recipe
-				{
-					calories = recipe.calories,
-					image = recipe.image,
-					label = recipe.label,
-					source = recipe.source,
-					totalWeight = recipe.totalWeight,
-					url = recipe.url,
-					yield = recipe.yield,
+			var id = rid;
+			//List<Recipe> recipes = new List<Recipe>();
+
+			//using (var client = new HttpClient())
+			//{
+
+			//	client.BaseAddress = new Uri("https://localhost:44333/");
+			//	client.DefaultRequestHeaders.Clear();
+			//	client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+			//	HttpResponseMessage Res = await client.GetAsync("api/recipe/id/" + "");
+
+			//	if (Res.IsSuccessStatusCode)
+			//	{
+			//		var name = Res.Content.ReadAsStringAsync().Result;
+			//		recipes = JsonConvert.DeserializeObject<List<Recipe>>(name);
+			//	}
+			//}
+			//if (recipe != null)
+			//{
+			//	var newrecipe = new Recipe
+			//	{
+			//		calories = recipe.calories,
+			//		image = recipe.image,
+			//		label = recipe.label,
+			//		source = recipe.source,
+			//		totalWeight = recipe.totalWeight,
+			//		url = recipe.url,
+			//		yield = recipe.yield,
 
 
-				};
-			}
+			//	};
+			//}
 			return RedirectToAction(nameof(Index));
 		}
 	}

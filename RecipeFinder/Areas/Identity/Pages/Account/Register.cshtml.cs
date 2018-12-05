@@ -19,18 +19,18 @@ namespace RecipeFinder.Areas.Identity.Pages.Account
 		private readonly SignInManager<ApplicationUser> _signInManager;
 		private readonly UserManager<ApplicationUser> _userManager;
 		private readonly ILogger<RegisterModel> _logger;
-		private readonly IEmailSender _emailSender;
+		//private readonly IEmailSender _emailSender;
 
 		public RegisterModel(
 			UserManager<ApplicationUser> userManager,
 			SignInManager<ApplicationUser> signInManager,
-			ILogger<RegisterModel> logger,
-			IEmailSender emailSender)
+			ILogger<RegisterModel> logger
+			/*,IEmailSender emailSender*/)
 		{
 			_userManager = userManager;
 			_signInManager = signInManager;
 			_logger = logger;
-			_emailSender = emailSender;
+			//_emailSender = emailSender;
 		}
 
 		[BindProperty]
@@ -40,6 +40,9 @@ namespace RecipeFinder.Areas.Identity.Pages.Account
 
 		public class InputModel
 		{
+			[Required]
+			[Display(Name = "Username")]
+			public string UserName { get; set; }
 			[Required]
 			[EmailAddress]
 			[Display(Name = "Email")]
@@ -67,7 +70,7 @@ namespace RecipeFinder.Areas.Identity.Pages.Account
 			returnUrl = returnUrl ?? Url.Content("~/");
 			if (ModelState.IsValid)
 			{
-				var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
+				var user = new ApplicationUser { UserName = Input.UserName, Email = Input.Email };
 				var result = await _userManager.CreateAsync(user, Input.Password);
 				if (result.Succeeded)
 				{
@@ -80,8 +83,8 @@ namespace RecipeFinder.Areas.Identity.Pages.Account
 						values: new { userId = user.Id, code = code },
 						protocol: Request.Scheme);
 
-					await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-						$"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+					//await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+					//	$"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
 					await _signInManager.SignInAsync(user, isPersistent: false);
 					return LocalRedirect(returnUrl);
