@@ -3,9 +3,9 @@
 @{
 	ViewData["Title"] = "Index";
 }
-
-<h2>We have Fresh Picked Recipies For You.</h2>
-
+<hr />
+<h2 class="text-center">We have Some Fresh Picked Recipies For You.</h2>
+<hr />
 <div class="container">
 	<div class="row">
 		@foreach (var item in Model)
@@ -13,7 +13,7 @@
 			<div class="col-md-3 col-sm-6">
 				<div class="card" style="width: 20rem; height:38rem;">
 					<img class="card-img-top img-responsive" src=@Html.DisplayFor(modelItem => item.image) alt=" @Html.DisplayNameFor(model => model.label)">
-					<span class="card-title">@Html.DisplayFor(modelItem => item.label)</span>
+					<span class="card-title"><a class="cal" href=@Url.Action("RecipeDetails", "Recipe", new { rid = item.Id})>@Html.DisplayFor(modelItem => item.label)</a></span>
 					<div class="card-body">
 						<div class="itemdata">
 							<a class="cal" target="_blank" href=@Html.DisplayFor(modelItem => item.url)>
@@ -32,8 +32,23 @@
 						<div class="providersource">
 							<a href=@Html.DisplayFor(modelItem => item.url) target="_blank">@Html.DisplayFor(modelItem => item.source)</a>
 						</div>
-						<div class="savediv">
-							<a href="#" class="btn btn-success savebutton">Save</a>
+						<div class="row">
+							<div class="savediv col-md-4 col-md-offset-1">
+								<a href=@Url.Action("RecipeDetails", "Recipe", new { rid = item.Id}) class="btn btn-primary savebutton">View</a>
+							</div>
+							<div class="savediv col-md-4 col-md-offset-2" id="save-@item.Id">
+								<form action="@Url.Action("SaveRecipe", "Recipe", new { rid = item.Id, searchterm = ViewBag.SearchTerm})" method="POST">
+									<button type="submit" class="btn btn-success savebutton">Save</button>
+								</form>
+							</div>
+							@if (User.Identity.IsAuthenticated)
+							{
+								<div class="savediv col-md-4 col-md-offset-2" style="display:none;" id="delete-@item.Id">
+									<form action="@Url.Action("DeleteRecipe", "Recipe", new { rid = item.Id, searchterm = ViewBag.SearchTerm })" method="POST">
+										<button type="submit" class="btn btn-danger savebutton">Delete</button>
+									</form>
+								</div>
+							}
 						</div>
 					</div>
 				</div>
@@ -41,3 +56,30 @@
 		}
 	</div>
 </div>
+@section scripts{
+	@if (User.Identity.IsAuthenticated)
+	{
+		<script>
+			$(document).ready(function() {
+				$.ajax({
+					url: '@Url.Action("GetSavedRecipeId", "Recipe")',
+					type: "Get",
+					contentType: false,
+					processData: false,
+					success: function (result) {
+						for (var i = 0; i < result.length; i++) {
+							var id = result[i].id;
+							$("#save-" + id).hide();
+							$("#delete-" + id).show();
+						}
+					},
+					error: function (result) {
+						var res = result;
+					}
+				});
+
+			});
+		</script>
+	}
+
+}

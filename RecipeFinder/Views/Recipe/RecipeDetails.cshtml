@@ -1,0 +1,104 @@
+﻿@model RecipeFinder.Models.Recipe
+
+@{
+	ViewData["Title"] = "RecipeDetails";
+}
+
+<hr />
+<div class="detail-body">
+	<div class="container">
+		<div class="card-detail">
+			<div class="container-fliud">
+				<div class="wrapper row">
+					<div class="preview col-md-6">
+
+						<div class="preview-pic tab-content">
+							<div class="tab-pane active" id="pic-1"><img src=@Html.DisplayFor(model => model.image) /></div>
+						</div>
+
+					</div>
+					<div class="details col-md-6">
+						<h3 class="product-title">@Html.DisplayFor(model => model.label)</h3>
+						<div class="rating">
+							By <a href=@Html.DisplayFor(model => model.url) target="_blank">@Html.DisplayFor(model => model.source)</a>
+						</div>
+						@{
+							int calories = (int)Model.calories / (int)Model.yield;
+							int ingredientscount = Model.ingredients.Count();
+						}
+
+						<h4 class="price">@Html.DisplayNameFor(model => model.calories): <span>@calories kcal</span></h4>
+
+						@{
+							string serving = "";
+							if ((int)Model.yield > 1)
+							{
+								serving = "Servings";
+							}
+							else
+							{
+								serving = "Serving";
+							}
+						}
+						<h4 class="price">@Html.DisplayNameFor(model => model.yield): <span>@Html.DisplayFor(model => model.yield) @serving</span></h4>
+
+						@*<h4 class="price">@Html.DisplayNameFor(model => model.ingredients): <span>@ingredientscount</span></h4>*@
+						<div class="single category">
+							<h3 class="side-title">Ingredients</h3>
+							<ul class="list-unstyled">
+
+								@foreach (var ingredient in Model.ingredients)
+								{
+									int weight = (int)ingredient.weight;
+									<li><a style="text-transform: lowercase;">@ingredient.text <span class="pull-right"><b>@weight grams</b></span></a></li>
+								}
+							</ul>
+						</div>
+						<div class="action">
+							<div class="savediv" id="save-@Model.Id">
+								<form action="@Url.Action("SaveRecipe", "Recipe", new { rid = Model.Id, searchterm = ViewBag.SearchTerm})" method="POST">
+									<button type="submit" class="add-to-cart btn btn-success savebutton">Save Recipe</button>
+								</form>
+							</div>
+							@if (User.Identity.IsAuthenticated)
+							{
+								<div class="savediv" style="display:none;" id="delete-@Model.Id">
+									<form action="@Url.Action("DeleteRecipe", "Recipe", new { rid = Model.Id, searchterm = ViewBag.SearchTerm })" method="POST">
+										<button type="submit" class="add-to-cart btn btn-danger savebutton">Delete Recipe</button>
+									</form>
+								</div>
+							}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<hr />
+@section scripts{
+	@if (User.Identity.IsAuthenticated)
+	{
+		<script>
+			$(document).ready(function() {
+				$.ajax({
+					url: '@Url.Action("GetSavedRecipeId", "Recipe")',
+					type: "Get",
+					contentType: false,
+					processData: false,
+					success: function (result) {
+						for (var i = 0; i < result.length; i++) {
+							var id = result[i].id;
+							$("#save-" + id).hide();
+							$("#delete-" + id).show();
+						}
+					},
+					error: function (result) {
+						var res = result;
+					}
+				});
+
+			});
+		</script>
+	}
+}

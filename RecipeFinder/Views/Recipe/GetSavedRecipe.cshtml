@@ -1,0 +1,61 @@
+﻿@model IEnumerable<RecipeFinder.Models.Recipe>
+
+@{
+	ViewData["Title"] = "GetSavedRecipe";
+}
+<script src="https://code.jquery.com/jquery-3.3.1.js"
+		integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+		crossorigin="anonymous"></script>
+
+@if (Model.FirstOrDefault() != null)
+{
+	<hr />
+	<h2 class="text-center">Your Saved Recipes</h2>
+	<hr />
+}
+else
+{
+	<hr />
+	<h2 class="text-center">You don't have any saved Recipes</h2>
+	<hr />
+
+}
+@foreach (var item in Model)
+{
+	<div class="col-md-3 col-sm-6">
+		<div class="card" style="width: 20rem; height:38rem;">
+			<img class="card-img-top img-responsive" src=@Html.DisplayFor(modelItem => item.image) alt=" @Html.DisplayNameFor(model => model.label)">
+			<span class="card-title"><a class="cal" href=@Url.Action("RecipeDetails", "Recipe", new { rid = item.Id})>@Html.DisplayFor(modelItem => item.label)</a></span>
+			<div class="card-body">
+				<div class="itemdata">
+					<a class="cal" target="_blank" href=@Html.DisplayFor(modelItem => item.url)>
+						@{
+							int calories = (int)item.calories / (int)item.yield;
+							int ingredientscount = item.ingredients.Count();
+						}
+						<span class="num">@calories</span>
+						<span class="lbl">cal<span>ories</span></span>
+					</a>
+					<a class="ing" target="_blank" href=@Html.DisplayFor(modelItem => item.url)>
+						<span class="num">@ingredientscount</span>
+						<span class="lbl">ingr<span>edients</span></span>
+					</a>
+				</div>
+				<div class="providersource">
+					<a href=@Html.DisplayFor(modelItem => item.url) target="_blank">@Html.DisplayFor(modelItem => item.source)</a>
+				</div>
+				<div class="row">
+					<div class="savediv col-md-4 col-md-offset-1">
+						<a href=@Url.Action("RecipeDetails", "Recipe", new { rid = item.Id}) class="btn btn-primary savebutton">View</a>
+					</div>
+					<div class="savediv col-md-4 col-md-offset-2">
+						<form action="@Url.Action("DeleteRecipe", "Recipe", new { rid = item.Id, searchterm = ViewBag.SearchTerm})" method="POST">
+							<button type="submit" class="btn btn-danger savebutton">Delete</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
