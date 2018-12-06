@@ -54,20 +54,28 @@
 								}
 							</ul>
 						</div>
+
 						<div class="action">
-							<div class="savediv" id="save-@Model.Id">
-								<form action="@Url.Action("SaveRecipe", "Recipe", new { rid = Model.Id, searchterm = ViewBag.SearchTerm})" method="POST">
-									<button type="submit" class="add-to-cart btn btn-success savebutton">Save Recipe</button>
-								</form>
-							</div>
-							@if (User.Identity.IsAuthenticated)
-							{
-								<div class="savediv" style="display:none;" id="delete-@Model.Id">
-									<form action="@Url.Action("DeleteRecipe", "Recipe", new { rid = Model.Id, searchterm = ViewBag.SearchTerm })" method="POST">
-										<button type="submit" class="add-to-cart btn btn-danger savebutton">Delete Recipe</button>
+							<div class="row">
+								<div class="savediv col-md-4" id="save-@Model.Id">
+									<form action="@Url.Action("SaveRecipe", "Recipe", new { rid = Model.Id, searchterm = ViewBag.SearchTerm})" method="POST">
+										<button type="submit" class="add-to-cart btn btn-success savebutton">Save Recipe</button>
 									</form>
 								</div>
-							}
+								@if (User.Identity.IsAuthenticated)
+								{
+
+									<div class="savediv col-md-4 " style="display:none;" id="delete-@Model.Id">
+										<form action="@Url.Action("DeleteRecipe", "Recipe", new { rid = Model.Id, searchterm = ViewBag.SearchTerm })" method="POST">
+											<button type="submit" class="add-to-cart btn btn-danger savebutton">Delete Recipe</button>
+										</form>
+									</div>
+									<div class="savediv col-md-4" style=" display:none;" id="edit-@Model.Id">
+										<a href=@Url.Action("UpdateRecipe", "Recipe", new { rid = Model.Id, searchterm = ViewBag.SearchTerm }) class="add-to-cart  btn btn-primary savebutton">Edit Recipe</a>
+									</div>
+
+								}
+							</div>
 						</div>
 					</div>
 				</div>
@@ -91,6 +99,7 @@
 							var id = result[i].id;
 							$("#save-" + id).hide();
 							$("#delete-" + id).show();
+							$("#edit-" + id).show();
 						}
 					},
 					error: function (result) {

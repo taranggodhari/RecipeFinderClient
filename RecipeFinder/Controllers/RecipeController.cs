@@ -183,6 +183,69 @@ namespace RecipeFinder.Controllers
 			}
 		}
 		[Authorize]
+		[HttpGet]
+		//[Authorize(Roles = "Student")]
+		public async Task<IActionResult> UpdateRecipe(string rid, string searchterm)
+		{
+			var id = Convert.ToInt32(rid);
+			Recipe recipe = new Recipe();
+
+			using (var client = new HttpClient())
+			{
+
+				client.BaseAddress = new Uri("https://localhost:44333/");
+				client.DefaultRequestHeaders.Clear();
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+				HttpResponseMessage Res = await client.GetAsync("api/recipe/id/" + id);
+
+				if (Res.IsSuccessStatusCode)
+				{
+					var name = Res.Content.ReadAsStringAsync().Result;
+					recipe = JsonConvert.DeserializeObject<Recipe>(name);
+				}
+				//returning the employee list to view  
+				return View(recipe);
+			}
+		}
+		[Authorize]
+		[HttpPost]
+		//[Authorize(Roles = "Student")]
+		public async Task<IActionResult> UpdateThisRecipe(Recipe recipe)
+		{
+			var user = await userManager.GetUserAsync(User);
+
+			using (var client = new HttpClient())
+			{
+
+				client.BaseAddress = new Uri("https://localhost:44333/");
+				client.DefaultRequestHeaders.Clear();
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+				HttpResponseMessage GetRes = await client.GetAsync("api/recipe/id/" + recipe.Id);
+
+				if (GetRes.IsSuccessStatusCode)
+				{
+					var name = GetRes.Content.ReadAsStringAsync().Result;
+					var newrecipe = JsonConvert.DeserializeObject<Recipe>(name);
+
+					recipe.ingredients = newrecipe.ingredients;
+					HttpResponseMessage Res = await client.PutAsJsonAsync("api/recipe/" + recipe.Id + "/" + user.Email, recipe);
+					if (Res.IsSuccessStatusCode)
+					{
+						return RedirectToAction("RecipeDetails", "Recipe", new { rid = recipe.Id });
+					}
+					else
+					{
+						return RedirectToAction("UpdateRecipe", "Recipe", new { rid = recipe.Id });
+					}
+				}
+				else
+				{
+					return RedirectToAction("UpdateRecipe", "Recipe", new { rid = recipe.Id });
+				}
+			}
+		}
+		[Authorize]
 		[HttpPost]
 		//[Authorize(Roles = "Student")]
 		public async Task<IActionResult> DeleteRecipe(string rid, string searchterm)
