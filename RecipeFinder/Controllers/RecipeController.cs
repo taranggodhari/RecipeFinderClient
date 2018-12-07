@@ -31,12 +31,12 @@ namespace RecipeFinder.Controllers
 			using (var client = new HttpClient())
 			{
 
-				client.BaseAddress = new Uri("https://localhost:44333/");
+				client.BaseAddress = new Uri("http://taranggodhari-eval-test.apigee.net/");
 				client.DefaultRequestHeaders.Clear();
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 				//Add app key generated on apigee here
-				//client.DefaultRequestHeaders.Add("appkey", "531909d58814fa2f57ebd012084dc0af");
-				HttpResponseMessage Res = await client.GetAsync("api/recipe");
+				client.DefaultRequestHeaders.Add("apikey", "ojqE3hNqm5MyUTRQQlKxwDFLZZkkw2n5");
+				HttpResponseMessage Res = await client.GetAsync("recipeapiproxy/api/recipe");
 
 				if (Res.IsSuccessStatusCode)
 				{
@@ -56,10 +56,11 @@ namespace RecipeFinder.Controllers
 			using (var client = new HttpClient())
 			{
 
-				client.BaseAddress = new Uri("https://localhost:44333/");
+				client.BaseAddress = new Uri("http://taranggodhari-eval-test.apigee.net/");
 				client.DefaultRequestHeaders.Clear();
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-				HttpResponseMessage Res = await client.GetAsync("api/recipe/query/" + search);
+				client.DefaultRequestHeaders.Add("apikey", "ojqE3hNqm5MyUTRQQlKxwDFLZZkkw2n5");
+				HttpResponseMessage Res = await client.GetAsync("recipeapiproxy/api/recipe/query/" + search);
 
 				if (Res.IsSuccessStatusCode)
 				{
@@ -81,10 +82,11 @@ namespace RecipeFinder.Controllers
 			using (var client = new HttpClient())
 			{
 
-				client.BaseAddress = new Uri("https://localhost:44333/");
+				client.BaseAddress = new Uri("http://taranggodhari-eval-test.apigee.net/");
 				client.DefaultRequestHeaders.Clear();
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-				HttpResponseMessage Res = await client.GetAsync("api/recipe/userrecipe/" + user.Email);
+				client.DefaultRequestHeaders.Add("apikey", "ojqE3hNqm5MyUTRQQlKxwDFLZZkkw2n5");
+				HttpResponseMessage Res = await client.GetAsync("recipeapiproxy/api/recipe/userrecipe/" + user.Email);
 
 				if (Res.IsSuccessStatusCode)
 				{
@@ -106,10 +108,11 @@ namespace RecipeFinder.Controllers
 			using (var client = new HttpClient())
 			{
 
-				client.BaseAddress = new Uri("https://localhost:44333/");
+				client.BaseAddress = new Uri("http://taranggodhari-eval-test.apigee.net/");
 				client.DefaultRequestHeaders.Clear();
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-				HttpResponseMessage Res = await client.GetAsync("api/recipe/userrecipe/" + user.Email);
+				client.DefaultRequestHeaders.Add("apikey", "ojqE3hNqm5MyUTRQQlKxwDFLZZkkw2n5");
+				HttpResponseMessage Res = await client.GetAsync("recipeapiproxy/api/recipe/userrecipe/" + user.Email);
 
 				if (Res.IsSuccessStatusCode)
 				{
@@ -138,10 +141,11 @@ namespace RecipeFinder.Controllers
 			using (var client = new HttpClient())
 			{
 
-				client.BaseAddress = new Uri("https://localhost:44333/");
+				client.BaseAddress = new Uri("http://taranggodhari-eval-test.apigee.net/");
 				client.DefaultRequestHeaders.Clear();
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-				HttpResponseMessage Res = await client.GetAsync("api/recipe/id/" + id);
+				client.DefaultRequestHeaders.Add("apikey", "ojqE3hNqm5MyUTRQQlKxwDFLZZkkw2n5");
+				HttpResponseMessage Res = await client.GetAsync("recipeapiproxy/api/recipe/id/" + id);
 
 				if (Res.IsSuccessStatusCode)
 				{
@@ -161,9 +165,10 @@ namespace RecipeFinder.Controllers
 			using (var client = new HttpClient())
 			{
 
-				client.BaseAddress = new Uri("https://localhost:44333/");
+				client.BaseAddress = new Uri("http://taranggodhari-eval-test.apigee.net/");
 				client.DefaultRequestHeaders.Clear();
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+				client.DefaultRequestHeaders.Add("apikey", "ojqE3hNqm5MyUTRQQlKxwDFLZZkkw2n5");
 				var user = await userManager.GetUserAsync(User);
 				var email = user.Email;
 				PostRecipe postrecipe = new PostRecipe()
@@ -171,7 +176,7 @@ namespace RecipeFinder.Controllers
 					RecipeId = rid,
 					Email = email
 				};
-				HttpResponseMessage response = await client.PostAsJsonAsync("/api/recipe", postrecipe);
+				HttpResponseMessage response = await client.PostAsJsonAsync("recipeapiproxy/api/recipe", postrecipe);
 				if (searchterm == "" || searchterm == null)
 				{
 					return RedirectToAction("GetSavedRecipe", "Recipe");
@@ -193,11 +198,12 @@ namespace RecipeFinder.Controllers
 			using (var client = new HttpClient())
 			{
 
-				client.BaseAddress = new Uri("https://localhost:44333/");
+				client.BaseAddress = new Uri("http://taranggodhari-eval-test.apigee.net/");
 				client.DefaultRequestHeaders.Clear();
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+				client.DefaultRequestHeaders.Add("apikey", "ojqE3hNqm5MyUTRQQlKxwDFLZZkkw2n5");
 
-				HttpResponseMessage Res = await client.GetAsync("api/recipe/id/" + id);
+				HttpResponseMessage Res = await client.GetAsync("recipeapiproxy/api/recipe/id/" + id);
 
 				if (Res.IsSuccessStatusCode)
 				{
@@ -218,10 +224,11 @@ namespace RecipeFinder.Controllers
 			using (var client = new HttpClient())
 			{
 
-				client.BaseAddress = new Uri("https://localhost:44333/");
+				client.BaseAddress = new Uri("http://taranggodhari-eval-test.apigee.net/");
 				client.DefaultRequestHeaders.Clear();
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-				HttpResponseMessage GetRes = await client.GetAsync("api/recipe/id/" + recipe.Id);
+				client.DefaultRequestHeaders.Add("apikey", "ojqE3hNqm5MyUTRQQlKxwDFLZZkkw2n5");
+				HttpResponseMessage GetRes = await client.GetAsync("recipeapiproxy/api/recipe/id/" + recipe.Id);
 
 				if (GetRes.IsSuccessStatusCode)
 				{
@@ -229,7 +236,7 @@ namespace RecipeFinder.Controllers
 					var newrecipe = JsonConvert.DeserializeObject<Recipe>(name);
 
 					recipe.ingredients = newrecipe.ingredients;
-					HttpResponseMessage Res = await client.PutAsJsonAsync("api/recipe/" + recipe.Id + "/" + user.Email, recipe);
+					HttpResponseMessage Res = await client.PutAsJsonAsync("recipeapiproxy/api/recipe/" + recipe.Id + "/" + user.Email, recipe);
 					if (Res.IsSuccessStatusCode)
 					{
 						return RedirectToAction("RecipeDetails", "Recipe", new { rid = recipe.Id });
@@ -254,12 +261,13 @@ namespace RecipeFinder.Controllers
 			using (var client = new HttpClient())
 			{
 
-				client.BaseAddress = new Uri("https://localhost:44333/");
+				client.BaseAddress = new Uri("http://taranggodhari-eval-test.apigee.net/");
 				client.DefaultRequestHeaders.Clear();
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+				client.DefaultRequestHeaders.Add("apikey", "ojqE3hNqm5MyUTRQQlKxwDFLZZkkw2n5");
 				var user = await userManager.GetUserAsync(User);
 
-				HttpResponseMessage response = await client.DeleteAsync("/api/recipe/" + rid + "/" + user.Email);
+				HttpResponseMessage response = await client.DeleteAsync("recipeapiproxy/api/recipe/" + rid + "/" + user.Email);
 				if (searchterm == "" || searchterm == null)
 				{
 					return RedirectToAction("GetSavedRecipe", "Recipe");
